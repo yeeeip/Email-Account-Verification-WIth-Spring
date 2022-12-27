@@ -1,0 +1,31 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring_email_verification
+    username: postgres
+    password: 888337
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format-sql: true
+    show-sql: true
+
+
+  mail:
+    host: smtp.gmail.com
+    username: appnotificationbot@gmail.com
+    password: txtudptpgjnodaca
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
