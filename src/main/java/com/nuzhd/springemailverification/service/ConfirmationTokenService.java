@@ -24,4 +24,5 @@ public class ConfirmationTokenService {
     public Optional<ConfirmationToken> findByUserId(Long userId) {
         return tokenRepository.findByUserId(userId);
     }
+
 }

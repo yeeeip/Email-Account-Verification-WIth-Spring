@@ -4,6 +4,7 @@ import com.nuzhd.springemailverification.model.ConfirmationToken;
 import com.nuzhd.springemailverification.model.MyUser;
 import com.nuzhd.springemailverification.repo.MyUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,18 +30,36 @@ public class MyUserService implements UserDetailsService {
     }
 
     public String signUpUser(MyUser user) {
-        boolean userExists = myUserRepository.findByEmail(user.getEmail())
-                .isPresent();
+        MyUser foundUser = myUserRepository.findByEmail(user.getEmail())
+                .orElse(null);
 
-        if (userExists) {
 
-            // If all attributes are the same, create new token and send confirmation email
+        if (foundUser != null) {
+            if (foundUser.getFirstName().equals(user.getFirstName()) &&
+                    foundUser.getLastName().equals(user.getLastName()) &&
+                    foundUser.getEmail().equals(user.getEmail())) {
+
+                ConfirmationToken userToken = tokenService.findByUserId(foundUser.getId())
+                        .orElseThrow(() -> new IllegalStateException("User doesn't exist!"));
+
+                userToken.setExpiresAt(LocalDateTime.now()
+                        .plusMinutes(15L));
+
+                String encodedPassword = passwordEncoder.encode(user.getPassword());
+                foundUser.setPassword(encodedPassword);
+
+                myUserRepository.save(foundUser);
+                tokenService.saveToken(userToken);
+
+                return userToken.getToken();
+            }
 
             throw new IllegalStateException("Email already taken");
         }
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+
         myUserRepository.save(user);
 
         ConfirmationToken token = new ConfirmationToken(
@@ -52,11 +71,10 @@ public class MyUserService implements UserDetailsService {
 
         tokenService.saveToken(token);
 
-        // TODO: Send Email
-
         return token.getToken();
     }
 
+    @Async
     public int enableAppUser(String email) {
         return myUserRepository.enableAppUser(email);
     }
