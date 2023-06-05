@@ -18,3 +18,4 @@ Click on link from the letter and confirm your account
 If you registered with wrong or unexisting email - don't worry. Just copy the token from the response and follow th link: http://localhost:8080/api/v1/registration/confirm?token=<paste_your_token>
 
 After account confirmation you can go to the http://localhost:8080/login and login with your email and password
+In case you have been successfully logged in, you will see the following message: <bllo from the secured API</b>
