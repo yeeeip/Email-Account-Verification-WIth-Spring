@@ -5,7 +5,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/spring_email_verification
+    url: jdbc:postgresql://localhost:5432/spring_email_verification
     username: postgres
     password: 888337
 

@@ -13,7 +13,6 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
 
-
     @PostMapping
     public String register(@RequestBody RegistrationRequest request) {
         return registrationService.register(request);
@@ -23,5 +22,4 @@ public class RegistrationController {
     public String confirmEmail(@RequestParam("token") String token) {
         return registrationService.confirmToken(token);
     }
-
 }

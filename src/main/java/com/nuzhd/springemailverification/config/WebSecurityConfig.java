@@ -30,16 +30,11 @@ public class WebSecurityConfig {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .defaultSuccessUrl("/hello", true);
 
         return http.build();
     }
-
-//    @Bean
-//    AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) throws Exception {
-//        builder.authenticationProvider(daoAuthenticationProvider());
-//        return builder.build();
-//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
