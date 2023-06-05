@@ -13,9 +13,13 @@ Response should be as following:
 After that you should receive the account confirmation letter on your email (in case you registered with existing email)
 
 ![2023-06-05_23-57-03](https://github.com/yeeeip/Email-Account-Verification-WIth-Spring/assets/81825828/920de8cc-59aa-4f7b-bee3-cb83a8af2dee)
+
 Click on link from the letter and confirm your account
 
 If you registered with wrong or unexisting email - don't worry. Just copy the token from the response and follow th link: http://localhost:8080/api/v1/registration/confirm?token=<paste_your_token>
 
-After account confirmation you can go to the http://localhost:8080/login and login with your email and password
+Then you can go to the http://localhost:8080/login and login with your email and password
+
+![2023-06-06_00-36-59](https://github.com/yeeeip/Email-Account-Verification-WIth-Spring/assets/81825828/b0fdfbbb-e87f-4f64-9bc3-12be55cddca3)
+
 In case you have been successfully logged in, you will see the following message: <b>Hello from the secured API</b>
